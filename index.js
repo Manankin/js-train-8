@@ -148,7 +148,7 @@ function getElementAtIndex(arr, index) {
     if (index <= arr.length -1) {
   // Отримуємо елемент з масиву за заданим індексом
   // Повертаємо отриманий елемент
-      // return arr.at(index)
+      return arr.at(index)
     } else {
   // Якщо індекс виходить за межі масиву,повертаємо undefined
       return "undefined"
@@ -399,6 +399,11 @@ console.log(customUnshift([2, 3, 4, 5], 1, 0)); // Виведе { initialLength:
 function customSome(arr, condition) {
   // Перевіряємо, чи вхідний параметр є масивом якщо ні повертаємо false
   // Перевіряємо, чи condition є функцією  якщо ні повертаємо false
+  if (!Array.isArray(arr) && typeof condition !== 'function') {
+    return false
+  } else {
+    return arr.some(condition)
+  }
   // Використовуємо метод `some` для перевірки умови хоча б для одного елементу масиву
   // Повертаємо результат перевірки
 }
@@ -409,11 +414,8 @@ console.log(customSome([1, 2, 3, 4, 5], isEven));
 // Виведе true
 
 
-
 // Завдання: 16
-
-/**
-
+/*
 Функція customAt повертає елемент масиву за заданим індексом.
  arr - Вхідний масив, з якого буде отриманий елемент.
  index - Індекс елементу, який потрібно отримати.
@@ -422,22 +424,32 @@ console.log(customSome([1, 2, 3, 4, 5], isEven));
 function customAt(arr, index) {
   // Перевіряємо, чи вхідний параметр є масивом якщо ні повертаємо undefined
   // Перевіряємо, чи індекс виходить за межі масиву якщо ні повертаємо undefined
+  if (!Array.isArray(arr) && 0 <= index >= arr.length - 1) {
+    return 'undefined'
+  } else {
+    const element = arr.at(index);
+    switch (typeof element) {
+      case 'string': return `${element} - Елемент є рядком`;
+        break;
+      case 'number': return `${element} - Елемент є числом`;
+        break;
+      case 'object': return `${element} - Елемент є обєктом`;
+        break;
+      // default: return `${element} - Інший тип`;
+    }
+  }
   // Отримуємо елемент масиву за заданим індексом
   // перевіремо якого типу елемент ми отримали,якщо рядок виведом в консоль -Елемент є рядком,числом - Елемент є числом, об`єктом -Елемент є обєктом
 }
-
 console.log("Завдання: 16 ==============================");
 console.log(customAt([1, 2, 3, 4, 5], 2));
 // Виведе
 // Елемент є числом.
 // 3
 
-//--------------------------------------
 
 // Завдання 17
-
-/**
-  
+/**  
   Функція customIncludes перевіряє, чи масив містить заданий елемент за допомогою методу includes.
    arr - Вхідний масив, який буде перевірятись.
    element - Елемент, наявність якого перевіряється.
@@ -445,9 +457,17 @@ console.log(customAt([1, 2, 3, 4, 5], 2));
   */
 function customIncludes(arr, element) {
   // Перевіряємо, чи вхідний параметр є масивом
+  if (!Array.isArray(arr)) {
+    return undefined
+  } else {
+    const isInside = arr.includes(element);
+    console.log(arr.filter( item => item === element).length);
+    return isInside;
+  }
   // Використовуємо метод includes для перевірки наявності елемента в масиві
   // За допомогою методу filter перевіряємо скільки разів в масиві зустрічається елемент та виводимо число в консоль
   //Повертаємо результат
+  
 }
 
 console.log("Завдання: 17 ==============================");
